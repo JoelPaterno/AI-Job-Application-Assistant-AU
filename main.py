@@ -9,11 +9,7 @@ st.write("Welcome to AI Job Application Assistant AU")
 #Main Section 
 st.file_uploader("Upload your resume", type=["pdf"])
 
-left_column, right_column = st.columns([4, 1], vertical_alignment="center")
-
-left_column.text_input("Find Jobs by Role", key="role") 
-right_column.button("Find Jobs")
-
+st.button("Run Job Search")
 
 
 #Side Bar
