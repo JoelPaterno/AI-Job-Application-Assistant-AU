@@ -1,0 +1,74 @@
+{
+    "name": "John Doe",
+    "email": "john.doe@email.com",
+    "phone": "(123) 456-7890",
+    "address": "123 Main St, Anytown, ST 12345",
+    "summary": "Experienced software developer with a passion for creating efficient and scalable applications.",
+    "education": [
+      {
+        "degree": "Bachelor of Science in Computer Science",
+        "institution": "University of Technology",
+        "location": "Tech City, ST",
+        "graduationDate": "May 2018"
+      }
+    ],
+    "workExperience": [
+      {
+        "title": "Senior Software Developer",
+        "company": "Tech Solutions Inc.",
+        "location": "Innovation City, ST",
+        "startDate": "June 2020",
+        "endDate": "Present",
+        "responsibilities": [
+          "Lead a team of 5 developers in creating robust web applications",
+          "Implemented new features resulting in a 30% increase in user engagement",
+          "Optimized database queries, improving application performance by 40%"
+        ]
+      },
+      {
+        "title": "Software Developer",
+        "company": "StartUp Innovations",
+        "location": "Startup Valley, ST",
+        "startDate": "July 2018",
+        "endDate": "May 2020",
+        "responsibilities": [
+          "Developed and maintained multiple client-facing applications",
+          "Collaborated with the design team to implement responsive UI/UX",
+          "Participated in code reviews and mentored junior developers"
+        ]
+      }
+    ],
+    "skills": [
+      "Python",
+      "JavaScript",
+      "React",
+      "Node.js",
+      "SQL",
+      "Git",
+      "Agile methodologies"
+    ],
+    "projects": [
+      {
+        "name": "E-commerce Platform",
+        "description": "Developed a full-stack e-commerce solution using React and Node.js",
+        "url": "https://github.com/johndoe/ecommerce-platform"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "AWS Certified Developer - Associate",
+        "issuer": "Amazon Web Services",
+        "dateObtained": "September 2019"
+      }
+    ],
+    "languages": [
+      {
+        "language": "English",
+        "proficiency": "Native"
+      },
+      {
+        "language": "Spanish",
+        "proficiency": "Intermediate"
+      }
+    ]
+  }
