@@ -26,6 +26,6 @@ output_text = template.render(content)
 print(output_text)
 
 config = pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
-pdfkit.from_string(output_text, f'{today_date} Resume.pdf', configuration=config)
+pdfkit.from_string(output_text, f'C:\\Users\\joelp\\AI-Job-Application-Assistant-AU\\files\\resumes\\{today_date} Resume.pdf', configuration=config)
 
 
