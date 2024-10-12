@@ -21,14 +21,12 @@ content = {
 
 template_loader = jinja2.FileSystemLoader('.\\templates')
 template_env = jinja2.Environment(loader=template_loader)
-template = template_env.get_template('resume_template_1.html')
+template = template_env.get_template('cover_letter_template_1.html')
 output_text = template.render(content)
 
 config = pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
 pdfkit.from_string(
-    output_text, f'C:\\Users\\joelp\\AI-Job-Application-Assistant-AU\\files\\resumes\\{today_date} Resume.pdf', 
-    configuration=config,
-    css="C:\\Users\\joelp\\AI-Job-Application-Assistant-AU\\pdf_generator\\styles\\resume_template_1_style.css",
+    output_text, f'C:\\Users\\joelp\\AI-Job-Application-Assistant-AU\\files\\resumes\\{today_date} Cover Letter.pdf', 
+    configuration=config, 
+    css="C:\\Users\\joelp\\AI-Job-Application-Assistant-AU\\pdf_generator\\styles\\cover_letter_template_1_styles.css"
     )
-
-
