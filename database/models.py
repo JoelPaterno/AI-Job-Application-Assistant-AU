@@ -1,4 +1,5 @@
 from .mysql_db import db, cursor
+import pandas as pd
 
 class JobPost():
     site =""

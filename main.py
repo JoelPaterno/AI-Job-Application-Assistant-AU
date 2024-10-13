@@ -12,10 +12,9 @@ st.write("Welcome to AI Job Application Assistant AU")
 if 'Roles' not in st.session_state:
     st.session_state.Roles = []
 
-radio = st.radio(
-    "Role's to look for:", 
-    (role for role in st.session_state.Roles)
-)
+
+for role in st.session_state.Roles:
+    st.checkbox(role, key=role)
 
 side_new_role = st.text_input("Enter new role: ", key="new_role")
 
@@ -67,6 +66,24 @@ def run_job_search(roles_to_search : list[str]):
             job_url=jobs_to_display['job_url'][job]
             job_url_direct=jobs_to_display['job_url_direct'][job]
             date_posted=jobs_to_display['date_posted'][job]
+            if pd.isna(site):
+                site = None
+            if pd.isna(title):
+                title = None
+            if pd.isna(company):
+                company = None
+            if pd.isna(location):
+                location = None
+            if pd.isna(jobType):
+                jobType = "Unknown"
+            if pd.isna(description):
+                description = None
+            if pd.isna(job_url):
+                job_url = None
+            if pd.isna(job_url_direct):
+                job_url_direct = None
+            if pd.isna(date_posted):
+                date_posted = None
             with st.expander(title):
                 st.write(site)
                 st.write(company)
