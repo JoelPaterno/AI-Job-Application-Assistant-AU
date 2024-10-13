@@ -1,22 +1,19 @@
 import jinja2
 import pdfkit
 from datetime import datetime
+import sys
+sys.path.insert(0, 'C:\\Users\\joelp\\AI-Job-Application-Assistant-AU')
+from llm import llm_handler
+
+
 
 name = "John Doe"
-email = "john.doe@email.com"
-phone = "(123) 456-7890"
-address = "123 Main St, Anytown, ST 12345"
-summary = "Experienced software developer with a passion for creating efficient and scalable applications."
-title = "Senior Software Developer"
+cover_letter = llm_handler.generate_cover_letter()
 today_date = datetime.today().strftime('%d %b, %Y')
 
 content = {
     "name": name,
-    "email": email,
-    "phone": phone,
-    "address": address,
-    "summary": summary,
-    "title": title
+    "cover_letter": cover_letter
     }
 
 template_loader = jinja2.FileSystemLoader('.\\templates')
@@ -26,7 +23,6 @@ output_text = template.render(content)
 
 config = pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
 pdfkit.from_string(
-    output_text, f'C:\\Users\\joelp\\AI-Job-Application-Assistant-AU\\files\\resumes\\{today_date} Cover Letter.pdf', 
+    output_text, f'C:\\Users\\joelp\\AI-Job-Application-Assistant-AU\\files\\cover_letters\\{today_date} Cover Letter.pdf', 
     configuration=config, 
-    css="C:\\Users\\joelp\\AI-Job-Application-Assistant-AU\\pdf_generator\\styles\\cover_letter_template_1_styles.css"
     )
