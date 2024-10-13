@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import time
+from database.models import JobPost
 import sys
 sys.path.insert(0, 'C:\\Users\\joelp\\AI-Job-Application-Assistant-AU')
 from job_scraper.jobspy_search import run_jobspy_search
@@ -23,7 +23,7 @@ side_new_role = st.text_input("Enter new role: ", key="new_role")
 def add_role():
     """
     Add a new role to the list of roles to look for. This function is
-    called when the "Add new role" button is clicked in the sidebar.
+    called when the "Add new role" button is clicked.
     """
     if st.session_state.new_role:
         st.session_state.Roles.append(st.session_state.new_role)
@@ -40,7 +40,9 @@ def run_job_search(roles_to_search : list[str]):
 
         #Run linkedin, indeed and glassdoor search
 
-        jobs_found = run_jobspy_search(role)
+        with st.spinner('Searching...'):
+            jobs_found = run_jobspy_search(role)
+        st.success("Done!")
             
         #st.write(f"Job Search Complete for {role} role.")
         print(f"Found {len(jobs_found)} jobs")
@@ -51,14 +53,30 @@ def run_job_search(roles_to_search : list[str]):
         #print(jobs_to_display['title'][0])
         #st.dataframe(jobs_to_display)
 
+        def add_job_for_application(site, title, company, location, jobType, description, job_url, job_url_direct, date_posted):
+            job = JobPost()
+            job.add_job(site, title, company, location, jobType, description, job_url, job_url_direct, date_posted)
+
         for job in range(len(jobs_to_display)):
-            with st.expander(jobs_to_display['title'][job]):
-                st.write(jobs_to_display['company'][job])
-                st.write(jobs_to_display['date_posted'][job])
-                st.write(jobs_to_display['location'][job])
-                st.write(jobs_to_display['description'][job])
-                st.write(jobs_to_display['job_url'][job])
-                st.write(jobs_to_display['job_url_direct'][job])
+            site = jobs_to_display['site'][job]
+            title=jobs_to_display['title'][job]
+            company=jobs_to_display['company'][job]
+            location=jobs_to_display['location'][job]
+            jobType=jobs_to_display['job_type'][job]
+            description=jobs_to_display['description'][job]
+            job_url=jobs_to_display['job_url'][job]
+            job_url_direct=jobs_to_display['job_url_direct'][job]
+            date_posted=jobs_to_display['date_posted'][job]
+            with st.expander(title):
+                st.write(site)
+                st.write(company)
+                st.write(date_posted)
+                st.write(location)
+                st.write(jobType)
+                st.write(description)
+                st.write(job_url)
+                st.write(job_url_direct)
+                st.button("Prepare Application", key=f"addJob{job}",on_click=add_job_for_application(site, title, company, location, jobType, description, job_url, job_url_direct, date_posted))
 
 st.button("Run Job Search", on_click=run_job_search(st.session_state.Roles))
 
