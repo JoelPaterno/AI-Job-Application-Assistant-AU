@@ -1,34 +1,25 @@
 import jinja2
 import pdfkit
+import json
 from datetime import datetime
 
-name = "John Doe"
-email = "john.doe@email.com"
-phone = "(123) 456-7890"
-address = "123 Main St, Anytown, ST 12345"
-summary = "Experienced software developer with a passion for creating efficient and scalable applications."
-title = "Senior Software Developer"
-today_date = datetime.today().strftime('%d %b, %Y')
+def generate_resume(title, company):
+    today_date = datetime.today().strftime('%d %b, %Y')
+    with open('pdf_generator/resume_data.json') as f:
+            resume_data = json.load(f)
 
-content = {
-    "name": name,
-    "email": email,
-    "phone": phone,
-    "address": address,
-    "summary": summary,
-    "title": title
-    }
+    content = resume_data
 
-template_loader = jinja2.FileSystemLoader('.\\templates')
-template_env = jinja2.Environment(loader=template_loader)
-template = template_env.get_template('resume_template_1.html')
-output_text = template.render(content)
+    template_loader = jinja2.FileSystemLoader('C:\\Users\\joelp\\AI-Job-Application-Assistant-AU\\pdf_generator\\templates')
+    template_env = jinja2.Environment(loader=template_loader)
+    template = template_env.get_template('resume_template_1.html')
+    output_text = template.render(content)
 
-config = pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
-pdfkit.from_string(
-    output_text, f'C:\\Users\\joelp\\AI-Job-Application-Assistant-AU\\files\\resumes\\{today_date} Resume.pdf', 
-    configuration=config,
-    css="C:\\Users\\joelp\\AI-Job-Application-Assistant-AU\\pdf_generator\\styles\\resume_template_1_style.css",
-    )
+    config = pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
+    pdfkit.from_string(
+        output_text, f'C:\\Users\\joelp\\AI-Job-Application-Assistant-AU\\files\\resumes\\{title} {company} Resume.pdf', 
+        configuration=config,
+        css="C:\\Users\\joelp\\AI-Job-Application-Assistant-AU\\pdf_generator\\styles\\resume_template_1_style.css",
+        )
 
-
+#generate_resume("testtitle", "testcompany")

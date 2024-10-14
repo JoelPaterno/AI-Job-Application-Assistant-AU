@@ -33,20 +33,25 @@ class JobPost():
         self.job_url_direct = job_url_direct
         self.date_posted = date_posted
 
-        cursor.execute("""
-                       INSERT INTO JobPost(
-                       site, 
-                       title, 
-                       company, 
-                       location, 
-                       jobType, 
-                       description, 
-                       job_url, 
-                       job_url_direct, 
-                       date_posted
-                       ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                       """, (site, title, company, location, jobType, description, job_url, job_url_direct, date_posted))
-        db.commit()
+         # Check if record already exists
+        cursor.execute("SELECT * FROM JobPost WHERE title = %s AND site = %s AND date_posted = %s", (title, site, date_posted))
+        existing_record = cursor.fetchone()
+
+        if existing_record is None:
+            cursor.execute("""
+                            INSERT INTO JobPost(
+                            site, 
+                            title, 
+                            company, 
+                            location, 
+                            jobType, 
+                            description, 
+                            job_url, 
+                            job_url_direct, 
+                            date_posted
+                            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        """, (site, title, company, location, jobType, description, job_url, job_url_direct, date_posted))
+            db.commit()
     def get_all_jobs() -> list:
         results = []
         cursor.execute("SELECT * FROM JobPost")

@@ -12,7 +12,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 model = ChatOpenAI(model="gpt-4")
 
-def generate_cover_letter():
+def generate_cover_letter(job_description, resume):
     cover_letter_template = strings.coverletter_template
     #takes {job_description} for a job description and {resume} for a resume
 
@@ -24,6 +24,6 @@ def generate_cover_letter():
 
     chain = prompt_template | model | parser
 
-    response = chain.invoke({"job_description": strings.test_job_description, "resume": strings.test_resume})
+    response = chain.invoke({"job_description": job_description, "resume": resume})
     print(response)
     return response

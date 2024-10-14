@@ -1,5 +1,24 @@
-<h1 style="text-align: center;">{{name}}</h1>
-<p style="text-align: left;">Dear Hiring Manager,&nbsp;</p>
-<p style="text-align: left;">{{cover_letter}}</p>
-<p style="text-align: left;">Sincerely,&nbsp;</p>
-<p style="text-align: left;">{{name}}</p>
+<body>
+    <div class="container">
+        <header>
+            <h1>{{ name }}</h1>
+            <p>{{ email }} | {{ phone }} | {{ address }}</p>
+            <p><a href="{{ website }}" target="_blank">{{ website }}</a></p>
+        </header>
+
+        <main class="letter-content">
+            <p class="date">{{ current_date }}</p>
+
+            <p class="salutation">{{ salutation }}</p>
+
+            <div class="body-content">
+                {{ content }}
+            </div>
+
+            <p class="closing">
+                {{ signature }}<br>
+                {{ name }}
+            </p>
+        </main>
+    </div>
+</body>
