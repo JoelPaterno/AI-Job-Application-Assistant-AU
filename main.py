@@ -117,7 +117,7 @@ def main():
                     st.write(description)
                     st.write(job_url)
                     st.write(job_url_direct)
-                    if st.button("Prepare Application", key=f"addJob{job}"):
+                    if st.button("Prepare Application", key=f"{title} {company}"):
                         add_job_for_application(site, title, company, location, jobType, description, job_url, job_url_direct, date_posted)
                         job_data = f"title: {title}, company: {company}, location: {location}, jobType: {jobType}, description: {description}"
                         with open('pdf_generator/resume_data.json') as f:
