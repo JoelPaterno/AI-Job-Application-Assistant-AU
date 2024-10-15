@@ -45,7 +45,7 @@ a:hover {
     text-decoration: underline;
 }
 
-.summary, .education, .experience, .skills, .projects, .certifications {
+.summary, .education, .experience, .skills, .projects, .certifications, .skills {
     margin-bottom: 30px;
 }
 
@@ -55,20 +55,6 @@ a:hover {
 
 ul {
     padding-left: 20px;
-}
-
-.skills ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.skills li {
-    background-color: #ecf0f1;
-    padding: 5px 10px;
-    margin: 5px;
-    border-radius: 5px;
 }
 
 @media (max-width: 768px) {

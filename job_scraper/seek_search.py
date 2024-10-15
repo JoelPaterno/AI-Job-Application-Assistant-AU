@@ -1,27 +1,50 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import sys
+sys.path.insert(0, 'C:\\Users\\joelp\\AI-Job-Application-Assistant-AU')
 
-try:
-    response = requests.get("https://seek.com.au/it-help-desk-jobs/in-all-melbourne-vic")
+from database.models import JobPost
 
-    response.raise_for_status()
-    soup = BeautifulSoup(response.text, "html.parser")
-
-     # Find all script tags
-    script_tags = soup.find_all('script')
+def extract_job_id(url):
+    # Use regex to find the job ID
+    match = re.search(r'/job/(\d+)\?', url)
     
-    print(f"Found {len(script_tags)} script tags.")
+    if match:
+        print(match.group(1))
+        return match.group(1)
+    else:
+        return None
+
+def get_job_from_url(url: str) -> JobPost:
+    job_id = extract_job_id(url)
+    try:
+        response = requests.get(f"https://www.seek.com.au/job/{job_id}")
+
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        parsed_html = soup.prettify()
+        
+        site ="seek"
+        title = soup.find('h1', {'data-automation': 'job-detail-title'}).text.strip()
+        company = soup.find('span', {'data-automation': 'advertiser-name'}).text.strip()
+        location = soup.find('span', {'data-automation': 'job-detail-location'}).text.strip()
+        jobType = soup.find('span', {'data-automation': 'job-detail-work-type'}).text.strip()
+        description_div = soup.find('div', {'data-automation': 'jobAdDetails'})
+        description = description_div.get_text(separator='\n', strip=True)
+        job_url = url
+        job_url_direct = "url"
+        date_posted="N/A"
+        print(title, company, location, jobType, description, job_url, job_url_direct, date_posted)
+        
+        #Add job to database
+        job = JobPost()
+        job.add_job(site, title, company, location, jobType, description, job_url, job_url_direct, date_posted)
+
+        return job
+    except requests.RequestException as e:
+        print(f"Error: {e}")
+        return None
+
     
-    for i, tag in enumerate(script_tags, 1):
-        print(f"\nScript Tag {i}:")
-        
-        # Print the first 200 characters of the script content
-        content = tag.string if tag.string else ""
-        print(content[:200] + "..." if len(content) > 200 else content)
-        
-        # Check if this script contains the job data
-        if re.search(r'window.SEEK_REDUX_DATA', str(tag)):
-            print("*** This script tag likely contains the job data ***")
-except requests.RequestException as e:
-    print(f"Error: {e}")

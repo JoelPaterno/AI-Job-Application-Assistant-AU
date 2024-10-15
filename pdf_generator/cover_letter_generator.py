@@ -18,7 +18,7 @@ def generate_cover_letter(job_description, company_name, job_title):
 
     resume_data_str = json.dumps(resume_data)
     cover_letter = llm_handler.generate_cover_letter(job_description, resume_data_str)
-    today_date = datetime.today().strftime('%d %m %Y')
+    today_date = datetime.today().strftime('%d/%m/%Y')
 
     with open('pdf_generator/cover_letter_data.json') as f:
             cover_letter_data = json.load(f)

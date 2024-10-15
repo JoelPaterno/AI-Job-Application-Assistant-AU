@@ -47,3 +47,25 @@ Please write the cover letter in a way that directly addresses the job role and 
 {resume}
 ```
 """
+
+resume_skills_template = """
+Compose a list of skills that match the details on the resume to the provided job description and resume. The list should be no longer than 10 skills and should be outputted in order of relevance to the role. Avoid using any placeholders, and ensure that the letter flows naturally and is tailored to the job.
+
+Analyze the job description to identify key resume skills that would grab the attention of recruiters and manger. .Take into account the type role and the skills rhat they are looking for for this role. Infer skills based on education and work experience and try to include relevant skills mentioned in the job descriptiopn
+
+
+## Rules:
+- Provide only a list of strings in order of relevance.
+- a skill cannot exceed 4 words.
+- Provide your response in json format.
+- Do not number the output only provide strings
+
+## Job Description:
+```
+{job_description}
+```
+## My resume:
+```
+{resume}
+```
+"""

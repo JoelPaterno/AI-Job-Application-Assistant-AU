@@ -3,7 +3,7 @@
         <header>
             <h1>{{ name }}</h1>
             <p>{{ email }} | {{ phone }} | {{ address }}</p>
-            <p><a href="{{ website }}" target="_blank">{{ website }}</a></p>
+            <p><a href="{{ website_link }}" target="_blank">{{ website }}</a></p>
         </header>
 
         <section class="summary">
@@ -38,14 +38,15 @@
             </div>
             {% endfor %}
         </section>
+        <br/>
 
         <section class="skills">
             <h2>Skills</h2>
-            <ul>
+            <p>
                 {% for skill in skills %}
-                <li>{{ skill }}</li>
+                    {{ skill }}{% if not loop.last %} - {% endif %}
                 {% endfor %}
-            </ul>
+            </p>
         </section>
 
         <section class="projects">
