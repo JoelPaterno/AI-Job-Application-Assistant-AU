@@ -34,9 +34,13 @@ Analyze the job description to identify key qualifications and requirements. Int
 Please write the cover letter in a way that directly addresses the job role and the company’s characteristics, ensuring it remains concise and engaging without unnecessary embellishments. The letter should be formatted into paragraphs and should not include a greeting or signature.
 
 ## Rules:
-- Provide only the text of the cover letter.
+- Provide provide your response in json format. The intructions for each section follows:
+    intro = string of 30-50 words - "This is a short paragraph of two sentences. It is an expression of interest to the role at the company and a short statement about how I am well suited for the role"
+    lead_in = string of 30-50 words -"This is a short paragrah where I explain mycareer goals and lead into why I am a good fit for the role."
+    points =  list of strings of 25-35 words - "points about why I believe I am a good candiate for the role, draw upon my previous experience from my resume and the job description to find experiences that are relevant to the job"
+    outro =  string of 30-50 words - "A short statement of why I am a good fit for the role. Thank you for considering my application."
 - Do not include any introductions, explanations, or additional information.
-- The letter should be formatted into paragraph.
+- the points array should be no longer than 4 points and no less than 3 points
 
 ## Job Description:
 ```

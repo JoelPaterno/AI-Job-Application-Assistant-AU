@@ -14,6 +14,12 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 model = ChatOpenAI(model="gpt-4")
 
 def generate_cover_letter(job_description, resume) -> str:
+    class CoverLetter(BaseModel):
+        intro:str
+        lead_in:str
+        points:list[str]
+        outro:str
+    
     cover_letter_template = strings.coverletter_template
     #takes {job_description} for a job description and {resume} for a resume
 
@@ -21,7 +27,7 @@ def generate_cover_letter(job_description, resume) -> str:
         [("system", cover_letter_template)]
     )
 
-    parser = StrOutputParser()
+    parser = JsonOutputParser(pydantic_object=CoverLetter)
 
     chain = prompt_template | model | parser
 

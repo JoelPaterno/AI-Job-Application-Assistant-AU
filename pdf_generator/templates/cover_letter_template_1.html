@@ -12,7 +12,17 @@
             <p class="salutation">{{ salutation }}</p>
 
             <div class="body-content">
-                {{ content }}
+                <p>{{ intro }}</p>
+                <br/>
+                <p>{{ lead_in }}</p>
+                <br/>
+                <ul>
+                    {% for point in points %}
+                    <li>{{ point }}</li>
+                    {% endfor %}
+                </ul>
+                <br/>
+                <p>{{ outro }}</p>
             </div>
 
             <p class="closing">
