@@ -5,6 +5,7 @@ import sys
 sys.path.insert(0, 'C:\\Users\\joelp\\AI-Job-Application-Assistant-AU')
 
 from database.models import JobPost
+from database.database import get_db
 
 def extract_job_id(url):
     # Use regex to find the job ID
@@ -35,12 +36,13 @@ def get_job_from_url(url: str) -> JobPost:
         description = description_div.get_text(separator='\n', strip=True)
         job_url = url
         job_url_direct = "url"
-        date_posted="N/A"
+        date_posted=None
         print(title, company, location, jobType, description, job_url, job_url_direct, date_posted)
         
+        db=next(get_db())
         #Add job to database
         job = JobPost()
-        job.add_job(site, title, company, location, jobType, description, job_url, job_url_direct, date_posted)
+        job.add_job(db,site, title, company, location, jobType, description, job_url, job_url_direct, date_posted)
 
         return job
     except requests.RequestException as e:

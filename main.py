@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from database.models import JobPost
+from database.database import get_db, Base, engine
 from pdf_generator.cover_letter_generator import generate_cover_letter
 from pdf_generator.resume_generator import generate_resume
 from job_scraper.jobspy_search import run_jobspy_search
@@ -52,8 +53,9 @@ def run_job_search(roles_to_search : list[str]):
         
 
 def add_job_for_application(site, title, company, location, jobType, description, job_url, job_url_direct, date_posted):
+    db = get_db()
     job = JobPost()
-    job.add_job(site, title, company, location, jobType, description, job_url, job_url_direct, date_posted)
+    job.add_job(db, site, title, company, location, jobType, description, job_url, job_url_direct, date_posted)
 
         
 
@@ -61,6 +63,9 @@ def main():
 
     st.title("AI Job Application Assistant AU")
     st.write("Welcome to AI Job Application Assistant AU")
+    
+    #Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
     init_session_state()
     #Side Bar
 

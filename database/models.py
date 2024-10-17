@@ -1,72 +1,46 @@
-from .mysql_db import db, cursor
-import pandas as pd
+from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.orm import Session
+from .database import Base
 
-class JobPost():
-    site =""
-    title =""
-    company =""
-    location =""
-    jobType =""
-    description =""
-    job_url =""
-    job_url_direct =""
-    date_posted =""
+class JobPost(Base):
+    __tablename__ = "job_posts"
 
-    def __init__(self, site="", title="", company="", location="", jobType="", description="", job_url="", job_url_direct="", date_posted=""):
-        self.site = site
-        self.title = title
-        self.company = company
-        self.location = location
-        self.jobType = jobType
-        self.description = description
-        self.job_url = job_url
-        self.job_url_direct = job_url_direct
-        self.date_posted = date_posted    
-    def add_job(self, site, title, company, location, jobType, description, job_url, job_url_direct, date_posted):
-        self.site = site
-        self.title = title
-        self.company = company
-        self.location = location
-        self.jobType = jobType
-        self.description = description
-        self.job_url = job_url
-        self.job_url_direct = job_url_direct
-        self.date_posted = date_posted
+    id = Column(Integer, primary_key=True, index=True)
+    site = Column(String)
+    title = Column(String)
+    company = Column(String)
+    location = Column(String)
+    job_type = Column(String)
+    description = Column(String)
+    job_url = Column(String)
+    job_url_direct = Column(String)
+    date_posted = Column(DateTime)
 
-         # Check if record already exists
-        cursor.execute("SELECT * FROM JobPost WHERE title = %s AND site = %s AND date_posted = %s", (title, site, date_posted))
-        existing_record = cursor.fetchone()
+    @classmethod
+    def add_job(cls, db: Session, site, title, company, location, job_type, description, job_url, job_url_direct, date_posted):
+        existing_job = db.query(cls).filter(
+            cls.title == title,
+            cls.site == site,
+            cls.date_posted == date_posted
+        ).first()
 
-        if existing_record is None:
-            cursor.execute("""
-                            INSERT INTO JobPost(
-                            site, 
-                            title, 
-                            company, 
-                            location, 
-                            jobType, 
-                            description, 
-                            job_url, 
-                            job_url_direct, 
-                            date_posted
-                            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                        """, (site, title, company, location, jobType, description, job_url, job_url_direct, date_posted))
+        if existing_job is None:
+            new_job = cls(
+                site=site,
+                title=title,
+                company=company,
+                location=location,
+                job_type=job_type,
+                description=description,
+                job_url=job_url,
+                job_url_direct=job_url_direct,
+                date_posted=date_posted
+            )
+            db.add(new_job)
             db.commit()
-    def get_all_jobs() -> list:
-        results = []
-        cursor.execute("SELECT * FROM JobPost")
-        rows = cursor.fetchall()
-        for jobpost in rows:
-            site = jobpost[1]
-            title = jobpost[2]
-            company = jobpost[3]
-            location = jobpost[4]
-            jobType = jobpost[5]
-            description = jobpost[6]
-            job_url = jobpost[7]
-            job_url_direct = jobpost[8]
-            date_posted = jobpost[9]
-            job = JobPost()
-            job.add_job(site, title, company, location, jobType, description, job_url, job_url_direct, date_posted)
-            results.append(job)
-        return results
+            db.refresh(new_job)
+            return new_job
+
+    @classmethod
+    def get_all_jobs(cls, db: Session) -> list:
+        return db.query(cls).all()
